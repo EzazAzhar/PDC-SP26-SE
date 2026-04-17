@@ -62,13 +62,13 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph Semaphore Pool N=2
+    subgraph SemPool [Semaphore Pool N=2]
         S1[Slot 1: Connected]
         S2[Slot 2: Connected]
     end
     T1[Thread 1] --> S1
     T2[Thread 2] --> S2
-    T3[Thread 3] -.->|Blocked until Slot opens| Semaphore
+    T3[Thread 3] -.->|Blocked until Slot opens| SemPool
 ```
 
 A Semaphore is an advanced lock that maintains an internal counter rather than a strict binary True/False state. 
