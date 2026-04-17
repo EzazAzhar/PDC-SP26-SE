@@ -42,10 +42,35 @@ In a multithreaded environment, all threads exist within the exact same OS proce
 To enforce atomic operations across Critical Sections, the OS and Python's `threading` library provide several architectural tools known as primitives.
 
 ### Locks (Mutex) & RLocks
+
+```mermaid
+graph TD
+    subgraph Critical Section
+        L[Lock Acquired]
+        Work[Shared Resource Modification]
+        R[Lock Released]
+    end
+    T1[Thread 1] --> L
+    L --> Work --> R
+    T2[Thread 2] -.->|Blocked until Release| L
+```
+
 - **Lock (Mutual Exclusion Object):** The simplest primitive. A thread "acquires" the lock before entering a critical section. If another thread tries to acquire it concurrently, it halts and waits until the first thread "releases" it. 
 - **RLock (Re-entrant Lock):** A special Lock that can be acquired multiple times by the *same* thread without causing a deadlock (ideal for recursive functions).
 
 ### Semaphores
+
+```mermaid
+graph TD
+    subgraph Semaphore Pool N=2
+        S1[Slot 1: Connected]
+        S2[Slot 2: Connected]
+    end
+    T1[Thread 1] --> S1
+    T2[Thread 2] --> S2
+    T3[Thread 3] -.->|Blocked until Slot opens| Semaphore
+```
+
 A Semaphore is an advanced lock that maintains an internal counter rather than a strict binary True/False state. 
 - **Use Case:** Instead of allowing exactly *one* thread into a critical section, a Semaphore initialized to $N$ allows exactly $N$ threads to access a resource pool simultaneously (e.g., limiting database connection pools).
 
@@ -56,6 +81,14 @@ A Semaphore is an advanced lock that maintains an internal counter rather than a
 ## 3. The Producer-Consumer Pattern
 
 A classic computer science paradigm in PDC. 
+
+```mermaid
+graph LR
+    P[Producer Thread] -->|Generates Data| Q[(Thread-Safe Queue)]
+    Q -->|Processes Data| C1[Consumer Thread 1]
+    Q -->|Processes Data| C2[Consumer Thread 2]
+```
+
 - **Producers** generate data (e.g., retrieving web requests) and place it into a buffer.
 - **Consumers** take data out of the buffer and process it.
 
