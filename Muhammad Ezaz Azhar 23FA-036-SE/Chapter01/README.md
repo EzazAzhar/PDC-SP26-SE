@@ -1,9 +1,5 @@
 # Chapter 01: Foundations of Parallel Computing in Python
 
-![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
-![Build Status](https://img.shields.io/badge/status-completed-brightgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
 ## Overview
 
 Welcome to the **Parallel and Distributed Computing (PDC)** documentation for Chapter 01. This repository serves as the fundamental introduction to achieving high-performance execution in Python. 
@@ -50,6 +46,27 @@ As modern software constraints evolve, the demand for **Parallel and Distributed
 Before diving into code, it is imperative to establish the theoretical definitions governing parallel execution.
 
 ### Serial vs. Concurrent vs. Parallel
+
+```mermaid
+graph TD
+    subgraph Serial
+        S1["Task 1 (Core 1)"] --> S2["Task 2 (Core 1)"]
+        S2 --> S3["Task 3 (Core 1)"]
+    end
+
+    subgraph Multithreading
+        T1["Thread 1 (Core 1)"] -.->|Context Switch| T2["Thread 2 (Core 1)"]
+        T2 -.->|Context Switch| T3["Thread 3 (Core 1)"]
+        T3 -.->|GIL locks| T1
+    end
+
+    subgraph Multiprocessing
+        P1["Process 1 (Core 1)"]
+        P2["Process 2 (Core 2)"]
+        P3["Process 3 (Core 3)"]
+    end
+```
+
 - **Serial Execution:** Instructions execute strictly sequentially. Task $N+1$ cannot commence until task $N$ has fully terminated. This guarantees determinism but underutilizes modern processors.
 - **Concurrency (Multithreading):** The architectural illusion of simultaneous execution. The OS rapidly context-switches tasks on a single core. The system is dealing with multiple tasks at once, but not necessarily executing their instructions at the identical physical microsecond.
 - **Parallelism (Multiprocessing):** True simultaneous execution. Multiple physical processing units (cores) execute independent tasks at the exact same physical microsecond.
@@ -98,7 +115,7 @@ The codebase executes the `do_something.py` workload 10 successive times across 
 ### Serial Implementation
 **File:** `serial_test.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 import time
 from do_something import *
@@ -117,7 +134,7 @@ if __name__ == "__main__":
     print("serial time=", end_time - start_time)
 ```
 
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 List processing complete.
 serial time= 8.41101923...
@@ -129,7 +146,7 @@ serial time= 8.41101923...
 ### Multithreaded Implementation
 **File:** `multithreading_test.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 from do_something import *
 import time
@@ -157,7 +174,7 @@ if __name__ == "__main__":
     print("multithreading time=", end_time - start_time)
 ```
 
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 List processing complete.
 multithreading time= 8.52994012...
@@ -169,7 +186,7 @@ multithreading time= 8.52994012...
 ### Multiprocessed Implementation
 **File:** `multiprocessing_test.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 from do_something import *
 import time
@@ -198,7 +215,7 @@ if __name__ == "__main__":
     print("multiprocesses time=", end_time - start_time)
 ```
 
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 List processing complete.
 multiprocesses time= 2.15822941...

@@ -1,9 +1,5 @@
 # Chapter 02: Thread Synchronization Primitives in Python
 
-![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
-![Build Status](https://img.shields.io/badge/status-completed-brightgreen.svg)
-![Course](https://img.shields.io/badge/course-PDC-purple.svg)
-
 ## Overview
 
 Welcome to the **Parallel and Distributed Computing (PDC)** documentation for Chapter 02. This chapter dives strictly into **Threading** and the complex synchronization mechanisms required to manage shared memory safely.
@@ -77,7 +73,7 @@ The `Chapter02` directory contains empirical scripts proving these concepts. Bel
 ### Basic Thread Definition
 **File:** `Thread_definition.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 import threading
 
@@ -93,7 +89,7 @@ def main():
         t.start()
         t.join()
 ```
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 my_func called by thread N°0
 my_func called by thread N°1
@@ -107,7 +103,7 @@ my_func called by thread N°9
 ### Implementing Locks
 **File:** `MyThreadClass_lock.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 import threading
 import time
@@ -129,7 +125,7 @@ class MyThreadClass(threading.Thread):
       # Critical Section End
       threadLock.release()
 ```
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 ---> Thread#1 running
 ---> Thread#1 over
@@ -144,7 +140,7 @@ class MyThreadClass(threading.Thread):
 ### Implementing Semaphores
 **File:** `Semaphore.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 import threading
 import time
@@ -164,7 +160,7 @@ def producer():
     print(f'Producer notify: item number {item}')
     semaphore.release()  # Increments semaphore counter, unblocking consumer
 ```
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 Consumer is waiting
 Producer notify: item number 100
@@ -177,7 +173,7 @@ Consumer notify: item number 100
 ### Thread-Safe Queues
 **File:** `Threading_with_queue.py`
 
-**💻 Code Snippet:**
+**Code Snippet:**
 ```python
 from threading import Thread
 from queue import Queue
@@ -205,7 +201,7 @@ class Consumer(Thread):
             print(f'Consumer popped {item}')
             self.queue.task_done()
 ```
-**📊 Expected Output:**
+**Expected Output:**
 ```text
 Producer appended 0 to queue
 Consumer popped 0
