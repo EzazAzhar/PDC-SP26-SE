@@ -35,16 +35,16 @@ Unlike Threading, Multiprocessing creates entirely independent Python processes 
 
 ```mermaid
 graph TD
-    subgraph P1 [Process 1]
+    subgraph P1 ["Process 1"]
         GIL1[GIL]
         T1[Main Thread]
     end
-    subgraph P2 [Process 2]
+    subgraph P2 ["Process 2"]
         GIL2[GIL]
         T2[Main Thread]
     end
     
-    OS[Operating System Kernel] --> P1
+    OS["Operating System Kernel"] --> P1
     OS --> P2
 ```
 
@@ -66,15 +66,15 @@ Because processes do not share memory, they require explicit IPC mechanisms to e
 
 ```mermaid
 graph LR
-    subgraph Process A
+    subgraph PA ["Process A"]
         MemA[Memory A]
     end
-    subgraph Process B
+    subgraph PB ["Process B"]
         MemB[Memory B]
     end
     
-    MemA -->|Write to Pipe| Pipe((OS Pipe))
-    Pipe -->|Read from Pipe| MemB
+    PA -->|Write to Pipe| Pipe((OS Pipe))
+    Pipe -->|Read from Pipe| PB
 ```
 
 - **Pipes:** A two-way connection primarily between exactly two processes. Ideal for fast, direct communication.
