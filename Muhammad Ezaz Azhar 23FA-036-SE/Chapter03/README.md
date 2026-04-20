@@ -35,17 +35,17 @@ Unlike Threading, Multiprocessing creates entirely independent Python processes 
 
 ```mermaid
 graph TD
-    subgraph Process 1
+    subgraph P1 [Process 1]
         GIL1[GIL]
         T1[Main Thread]
     end
-    subgraph Process 2
+    subgraph P2 [Process 2]
         GIL2[GIL]
         T2[Main Thread]
     end
     
-    OS[Operating System Kernel] --> Process 1
-    OS --> Process 2
+    OS[Operating System Kernel] --> P1
+    OS --> P2
 ```
 
 - **Pros:** True parallelism capable of maximizing CPU utilization across multiple cores. Perfect for heavy mathematical computations (CPU-bound tasks).
